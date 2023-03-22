@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cmjlkj.mapper.GwTaskMapper">
+    
+    <resultMap type="GwTask" id="GwTaskResult">
+        <result property="tId"    column="t_id"    />
+        <result property="tName"    column="t_name"    />
+        <result property="tContent"    column="t_content"    />
+        <result property="tCooperater"    column="t_cooperater"    />
+        <result property="tIdea"    column="t_idea"    />
+        <result property="tTarget"    column="t_target"    />
+        <result property="tRemark"    column="t_remark"    />
+        <result property="finishTime"    column="finish_time"    />
+        <result property="startTime"    column="start_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectGwTaskVo">
+        select t_id, t_name, t_content, t_cooperater, t_idea, t_target, t_remark, finish_time, start_time, create_by, create_time, update_by, update_time from gw_task
+    </sql>
+
+    <select id="selectGwTaskList" parameterType="GwTask" resultMap="GwTaskResult">
+        <include refid="selectGwTaskVo"/>
+        <where>  
+            <if test="tName != null  and tName != ''"> and t_name like concat('%', #{tName}, '%')</if>
+            <if test="tCooperater != null  and tCooperater != ''"> and t_cooperater = #{tCooperater}</if>
+        </where>
+    </select>
+    
+    <select id="selectGwTaskByTId" parameterType="Long" resultMap="GwTaskResult">
+        <include refid="selectGwTaskVo"/>
+        where t_id = #{tId}
+    </select>
+        
+    <insert id="insertGwTask" parameterType="GwTask" useGeneratedKeys="true" keyProperty="tId">
+        insert into gw_task
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tName != null and tName != ''">t_name,</if>
+            <if test="tContent != null and tContent != ''">t_content,</if>
+            <if test="tCooperater != null and tCooperater != ''">t_cooperater,</if>
+            <if test="tIdea != null and tIdea != ''">t_idea,</if>
+            <if test="tTarget != null and tTarget != ''">t_target,</if>
+            <if test="tRemark != null">t_remark,</if>
+            <if test="finishTime != null">finish_time,</if>
+            <if test="startTime != null">start_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tName != null and tName != ''">#{tName},</if>
+            <if test="tContent != null and tContent != ''">#{tContent},</if>
+            <if test="tCooperater != null and tCooperater != ''">#{tCooperater},</if>
+            <if test="tIdea != null and tIdea != ''">#{tIdea},</if>
+            <if test="tTarget != null and tTarget != ''">#{tTarget},</if>
+            <if test="tRemark != null">#{tRemark},</if>
+            <if test="finishTime != null">#{finishTime},</if>
+            <if test="startTime != null">#{startTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGwTask" parameterType="GwTask">
+        update gw_task
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tName != null and tName != ''">t_name = #{tName},</if>
+            <if test="tContent != null and tContent != ''">t_content = #{tContent},</if>
+            <if test="tCooperater != null and tCooperater != ''">t_cooperater = #{tCooperater},</if>
+            <if test="tIdea != null and tIdea != ''">t_idea = #{tIdea},</if>
+            <if test="tTarget != null and tTarget != ''">t_target = #{tTarget},</if>
+            <if test="tRemark != null">t_remark = #{tRemark},</if>
+            <if test="finishTime != null">finish_time = #{finishTime},</if>
+            <if test="startTime != null">start_time = #{startTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where t_id = #{tId}
+    </update>
+
+    <delete id="deleteGwTaskByTId" parameterType="Long">
+        delete from gw_task where t_id = #{tId}
+    </delete>
+
+    <delete id="deleteGwTaskByTIds" parameterType="String">
+        delete from gw_task where t_id in 
+        <foreach item="tId" collection="array" open="(" separator="," close=")">
+            #{tId}
+        </foreach>
+    </delete>
+
+</mapper>
