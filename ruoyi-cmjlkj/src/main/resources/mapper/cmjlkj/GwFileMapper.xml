@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.cmjlkj.mapper.GwFileMapper">
+    
+    <resultMap type="GwFile" id="GwFileResult">
+        <result property="fId"    column="f_id"    />
+        <result property="fileType"    column="file_type"    />
+        <result property="fileName"    column="file_name"    />
+        <result property="fileSize"    column="file_size"    />
+        <result property="fileAddr"    column="file_addr"    />
+        <result property="fileUrl"    column="file_url"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+    </resultMap>
+
+    <sql id="selectGwFileVo">
+        select f_id, file_type, file_name, file_size, file_addr, file_url, create_by, create_time, update_by, update_time from gw_file
+    </sql>
+
+    <select id="selectGwFileList" parameterType="GwFile" resultMap="GwFileResult">
+        <include refid="selectGwFileVo"/>
+        <where>  
+            <if test="params.beginFileType != null and params.beginFileType != '' and params.endFileType != null and params.endFileType != ''"> and file_type between #{params.beginFileType} and #{params.endFileType}</if>
+            <if test="fileName != null  and fileName != ''"> and file_name like concat('%', #{fileName}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectGwFileByFId" parameterType="Long" resultMap="GwFileResult">
+        <include refid="selectGwFileVo"/>
+        where f_id = #{fId}
+    </select>
+        
+    <insert id="insertGwFile" parameterType="GwFile" useGeneratedKeys="true" keyProperty="fId">
+        insert into gw_file
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="fileType != null and fileType != ''">file_type,</if>
+            <if test="fileName != null">file_name,</if>
+            <if test="fileSize != null">file_size,</if>
+            <if test="fileAddr != null and fileAddr != ''">file_addr,</if>
+            <if test="fileUrl != null">file_url,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="fileType != null and fileType != ''">#{fileType},</if>
+            <if test="fileName != null">#{fileName},</if>
+            <if test="fileSize != null">#{fileSize},</if>
+            <if test="fileAddr != null and fileAddr != ''">#{fileAddr},</if>
+            <if test="fileUrl != null">#{fileUrl},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updateGwFile" parameterType="GwFile">
+        update gw_file
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="fileType != null and fileType != ''">file_type = #{fileType},</if>
+            <if test="fileName != null">file_name = #{fileName},</if>
+            <if test="fileSize != null">file_size = #{fileSize},</if>
+            <if test="fileAddr != null and fileAddr != ''">file_addr = #{fileAddr},</if>
+            <if test="fileUrl != null">file_url = #{fileUrl},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+        </trim>
+        where f_id = #{fId}
+    </update>
+
+    <delete id="deleteGwFileByFId" parameterType="Long">
+        delete from gw_file where f_id = #{fId}
+    </delete>
+
+    <delete id="deleteGwFileByFIds" parameterType="String">
+        delete from gw_file where f_id in 
+        <foreach item="fId" collection="array" open="(" separator="," close=")">
+            #{fId}
+        </foreach>
+    </delete>
+
+</mapper>
