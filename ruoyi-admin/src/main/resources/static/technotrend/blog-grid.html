@@ -241,9 +241,6 @@
                             <p class="blog_p">{{article.introduce}}</p>
                             <div class="blog-meta text-left"><i class="fa fa-calendar"></i> {{article.createTime}}</div>
                             <div class="read_btn_div">
-                                <!--                                <router-link :to="'blog-single.html'+articleId">-->
-                                <!--                                    <el-button type="primary" size="mini" icon="el-icon-edit">Read More</el-button>-->
-                                <!--                                </router-link>-->
                                 <a :href="'blog-single.html?articleId='+article.articleId" class="read_btn">Read More <i class="fa fa-angle-right"></i></a>
 
                             </div>
@@ -535,35 +532,6 @@
         }
     })
 </script>
-<!--<script type="text/javascript">-->
-<!--    // var title=``-->
-<!--    $(function (){-->
-
-<!--        $.post({-->
-<!--            url:"/demo/modal/home",-->
-<!--            //data:{'name':$("#txtName").val()},-->
-<!--            // success:function (data,status) {-->
-<!--            //     alert(data);-->
-<!--            //     alert(status);-->
-<!--            // }-->
-<!--            success:function (response){-->
-<!--                // title=response.data.title;-->
-<!--                $("#test").html(response.data.title);-->
-<!--                var _data=response.data-->
-<!--                console.log(response.data,'response??????????????')-->
-<!--                var cent = document.getElementById('main')-->
-<!--                var str = ''-->
-<!--                for(var i =0; i<_data.length;i++) {-->
-<!--                    str += '<div>'+_data.title+'</div>'-->
-<!--                }-->
-<!--                cent.innerHTML = str-->
-<!--            }-->
-
-<!--        });-->
-
-<!--    })-->
-
-<!--</script>-->
 
 
 </body>
